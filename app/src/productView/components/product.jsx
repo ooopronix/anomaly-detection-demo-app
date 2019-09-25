@@ -38,6 +38,7 @@ class Product extends Component {
     let cartButtonContent = <span onClick={this.selectProduct}>
       <FontAwesomeIcon icon="shopping-cart" />
     </span>;
+    let iconStyle = {marginRight: '5px'};
 
     return (
         <div className="card-pf-body" style={{height: '261px'}}>
@@ -45,7 +46,7 @@ class Product extends Component {
           <h2 className="card-pf-title text-center">{product.pname}</h2>
           <div className="card-pf-items text-center">
             <div className="card-pf-item">
-              <span className="fa fa-usd"/>
+              <FontAwesomeIcon icon="dollar-sign" style={iconStyle}/>
               <span className="card-pf-item-text">{product.pprice}</span>
             </div>
             <div className="card-pf-item">
