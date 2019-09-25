@@ -17,6 +17,7 @@
 .a:focus{
   outline: none;
 }
+
 /* Add pointer icon */
 .pointer{
   cursor: pointer;

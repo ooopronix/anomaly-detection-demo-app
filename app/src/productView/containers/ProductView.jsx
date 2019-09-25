@@ -47,7 +47,7 @@ class ProductView extends Component {
       width: '80px',
       height: '80px',
     };
-    return <img className="img-thumb" src={ROUTES.IMAGES+filename} style={imageStyle}/>;
+    return <img alt="product" className="img-thumb" src={ROUTES.IMAGES+filename} style={imageStyle}/>;
   }
 
   closeModal(){
@@ -113,9 +113,9 @@ class ProductView extends Component {
   createFooter(){
     return (
         <div>
-          <a className="card-icon" >
+          <span className="card-icon" >
             <FontAwesomeIcon icon="question-circle" />
-          </a>
+          </span>
           Help
         </div>
     )

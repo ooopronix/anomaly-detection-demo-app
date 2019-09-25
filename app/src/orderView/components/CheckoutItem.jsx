@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 
 class CheckoutItem extends Component {
@@ -43,33 +43,33 @@ class CheckoutItem extends Component {
 
   render() {
     const productInfoStyle = {float: 'left'};
-    let itemRow =
-      <div className="list-group-item">
-        <div className="list-view-pf-main-info">
-          <div className="list-view-pf-left">
-            <div className="list-view-pf-checkbox">
-              <input type="checkbox" onChange={this.handleSelect.bind(this)}/>
-            </div>
-          </div>
-          <div className="list-view-pf-body">
-            <div className="list-view-pf-description" style={productInfoStyle}>
-              <div className="list-group-item-heading">
-                <img className="img-thumb" src={"/images/" + this.props.image}/>
-              </div>
-              <div className="list-group-item-heading">
-                {this.props.category} - {this.props.name}
-              </div>
-              <div className="list-group-item-text">
-                {"$" + this.props.price} x
-                <input type="number" min="0" step="1" defaultValue={this.props.quant} onChange={this.handleQuantChange.bind(this)} />
-              </div> </div>
-            <div className="list-view-pf-actions">
-              <button className="btn btn-default" onClick={this.update.bind(this)}>Update</button>
-            </div>
+    return <div className="list-group-item">
+      <div className="list-view-pf-main-info">
+        <div className="list-view-pf-left">
+          <div className="list-view-pf-checkbox">
+            <input type="checkbox" onChange={this.handleSelect.bind(this)}/>
           </div>
         </div>
-      </div>;
-    return itemRow
+        <div className="list-view-pf-body">
+          <div className="list-view-pf-description" style={productInfoStyle}>
+            <div className="list-group-item-heading">
+              <img alt="product" className="img-thumb" src={"/images/" + this.props.image}/>
+            </div>
+            <div className="list-group-item-heading">
+              {this.props.category} - {this.props.name}
+            </div>
+            <div className="list-group-item-text">
+              {"$" + this.props.price} x
+              <input type="number" min="0" step="1" defaultValue={this.props.quant}
+                     onChange={this.handleQuantChange.bind(this)}/>
+            </div>
+          </div>
+          <div className="list-view-pf-actions">
+            <button className="btn btn-default" onClick={this.update.bind(this)}>Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
   }
 }
 

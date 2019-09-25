@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import Form from "react-bootstrap/Form";
 
 class SqlQuery extends Component {
   static get propTypes(){
@@ -12,7 +13,7 @@ class SqlQuery extends Component {
 
   render() {
     return(
-      <form role="form" className="search-pf has-button">
+      <Form role="form" className="search-pf has-button">
         <div className="form-group">
           <div className="search-pf-input-group">
             <input id="search1"
@@ -27,7 +28,7 @@ class SqlQuery extends Component {
             <span className="fa fa-search"/>
           </button>
         </div>
-      </form>
+      </Form>
     );
   }
 

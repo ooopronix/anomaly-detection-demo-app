@@ -37,7 +37,8 @@ class App extends Component {
   }
 
   createModal(){
-    const btnStyle={boxShadow: 'none'};
+    const btnStyle={margin: '10px'};
+    const btnLink={color: '#ffff', textDecoration: 'none'};
     let cartCount = Object.keys(this.props.cart).length;
     let content =
       <div>
@@ -46,10 +47,10 @@ class App extends Component {
       </div>;
 
     let footer =
-      <div className="modal-footer">
-        <a className="btn btn-secondary" style={btnStyle} onClick={this.props.toggleModal}>
-          <Link to="/order"> Review Orders</Link>
-        </a>
+      <div>
+        <button className="btn btn-primary" style={btnStyle} onClick={this.props.toggleModal}>
+          <Link to="/order" style={btnLink}> Review Orders</Link>
+        </button>
         <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.props.toggleModal}>Close</button>
       </div>;
 

@@ -45,10 +45,9 @@ export function setProducts(products){
 
 function parseResponse(result){
   let payload = {};
-  result.products.map((product) => {
-     payload[product.id] = product;
-    }
-  );
+  result.products.forEach(function (product, index) {
+    payload[product.id] = product;
+  });
   return payload;
 }
 

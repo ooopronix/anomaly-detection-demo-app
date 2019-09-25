@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { NavItem, Navbar, Nav } from "react-bootstrap";
-import { IndexLinkContainer, LinkContainer } from "react-router-bootstrap";
 import { Link } from "react-router-dom";
 
 
@@ -35,9 +34,9 @@ class NavBar extends Component {
                 </Nav>
                 <Nav pullRight>
                     <Nav.Link href="#" className="cart-link" onSelect={this.props.toggleModal}>
-                        <a className="card-icon" >
+                        <span>
                             <FontAwesomeIcon icon="shopping-cart" />
-                        </a>{"   "}Cart:
+                        </span>{"   "}Cart:
                         <span className="cart-nav-count">{cartCount}</span>
                     </Nav.Link>
                 </Nav>
