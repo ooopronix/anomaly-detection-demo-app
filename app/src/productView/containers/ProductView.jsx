@@ -11,6 +11,10 @@ import Products from '../components/products.jsx';
 import { toggleCartModal } from '../../modal/modalActions';
 import ModalComponentDialog from "../../modal/components/ModalWindow.jsx";
 import { ROUTES } from '../productConstants'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 class ProductView extends Component {
   static get propTypes(){
@@ -57,63 +61,71 @@ class ProductView extends Component {
   }
 
   createModalFooter(){
+    const buttonStyle = {
+      margin: '10px',
+    };
     return (
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.addToCart}>Add to Cart</button>
-        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeModal}>Close</button>
-      </div>
+        <div className="">
+          <button style={buttonStyle} type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.addToCart}>Add to Cart</button>
+          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeModal}>Close</button>
+        </div>
     )
   }
 
   createModal(){
     let content = <div>content</div>;
-    let containerStyle = {width: 'auto'};
+    let bodyStyle = {margin: '10px'};
+    let iconStyle = {marginRight: '5px'};
+
     if(this.props.selectedProduct){
       let product = this.props.selectedProduct;
       let productImage = this.imageFormatter(product.image);
       content =
-        <div className="container" style={containerStyle}>
-          <div className="col-sm-3 aligner">
-            <div className="">{productImage}</div>
-          </div>
-          <div className="col-sm-6">
-            <h2 className="card-pf-title">{product.pname}</h2>
-            <div className="card-pf-item">
-              <span className="fa fa-usd"/>
-              <span className="card-pf-item-text"> {product.pprice}</span>
-            </div>
-            <div className="card-pf-item">
-              <span>Category: </span>
-              <span>{product.ptype}</span>
-            </div>
-          </div>
-        </div>
+          <Container>
+            <Row className="show-grid" style={bodyStyle}>
+              <Col xs={4} md={4}>
+                <div className="">{productImage}</div>
+              </Col>
+              <Col xs={6} md={4}>
+                <div>{product.pname}</div>
+                <div>
+                  <FontAwesomeIcon icon="dollar-sign" style={iconStyle}/>
+                  {product.pprice}
+                </div>
+                <div>
+                  Category: {product.ptype}
+                </div>
+              </Col>
+            </Row>
+          </Container>
     }
 
     return (
-      <ModalComponentDialog
-        isOpen={this.props.modalState}
-        toggleModal={this.props.toggleModal}
-        modalTitle="Would you like to add this item to your cart?"
-        modalContent={content}
-        modalFooter={this.createModalFooter()}/>
+        <ModalComponentDialog
+            isOpen={this.props.modalState}
+            toggleModal={this.props.toggleModal}
+            modalTitle="Would you like to add this item to your cart?"
+            modalContent={content}
+            modalFooter={this.createModalFooter()}/>
     )
   }
 
   createFooter(){
     return (
-      <a className="card-pf-link-with-icon" >
-        <span className="pficon pficon-help"/>
-        Help
-      </a>
+        <div>
+          <a className="card-icon" >
+            <FontAwesomeIcon icon="question-circle" />
+          </a>
+          Help
+        </div>
     )
   }
 
   createProducts(){
     return (
-      <Products products={this.props.products}
-                toggleModal={this.props.toggleModal}
-                selectProduct={this.props.selectProduct}/>
+        <Products products={this.props.products}
+                  toggleModal={this.props.toggleModal}
+                  selectProduct={this.props.selectProduct}/>
     )
   }
 
@@ -126,23 +138,22 @@ class ProductView extends Component {
       content = this.createProducts();
     }
     return (
-      <div className="col col-cards-pf container-cards-pf fader">
-        <div className="cards col-xs-10 col-md-8 ">
-          <div className="card-pf card-pf-accented">
+        <div className="col col-cards-pf container-cards-pf fader">
+          <div className="cards col-xs-10 col-md-8 ">
+            <div className="card-pf card-pf-accented">
               {title}
-            <div className="card-pf-footer ">
-              {content}
-              {this.createModal()}
-            </div>
-            <div className="card-pf-footer card-pf">
-              {this.createFooter()}
+              <div className="card-pf-footer ">
+                {content}
+                {this.createModal()}
+              </div>
+              <div className="card-pf-footer card-pf">
+                {this.createFooter()}
+              </div>
             </div>
           </div>
         </div>
-      </div>
     )
   }
-
 }
 
 const mapStateToProps = (state) => {
@@ -173,7 +184,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(selectProduct(product))
     }
   }
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductView)

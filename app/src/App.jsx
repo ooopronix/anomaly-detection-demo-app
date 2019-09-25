@@ -14,8 +14,12 @@ import ProductView from "./productView/containers/ProductView.jsx";
 import OrderView from "./orderView/containers/OrderView.jsx";
 import OrderQueryView from "./orderQueryView/containers/OrderQueryView.jsx";
 import { toggleShowCartModal } from './modal/modalActions';
-
 import { clearMessage } from "./message/messageActions";
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import {  faDollarSign, faExclamationTriangle, faQuestionCircle, faShoppingCart, faWindowClose } from '@fortawesome/free-solid-svg-icons'
+
 
 class App extends Component {
 
@@ -105,5 +109,8 @@ const mapDispatchToProps = (dispatch) => {
     },
   }
 };
+
+library.add(fab, faDollarSign, faExclamationTriangle, faQuestionCircle, faShoppingCart, faWindowClose);
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

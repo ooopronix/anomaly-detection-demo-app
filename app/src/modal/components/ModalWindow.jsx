@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import Modal from 'react-modal';
 import PropTypes from 'prop-types';
+import Modal from "react-bootstrap/Modal";
 
 class ModalComponentDialog extends Component{
   // Ensure that the toggleModal is the same that is passed to
@@ -31,32 +31,38 @@ class ModalComponentDialog extends Component{
       footer = this.props.modalFooter;
     }else {
       footer =
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeModal}>Close</button>
-        </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeModal}>Close</button>
+          </div>
     }
 
+    const buttonStyle = {
+      paddingRight: '20px',
+      paddingTop: '25px',
+    };
+
+
     return (
-      <div>
-        <Modal
-          isOpen={this.props.isOpen}
-          contentLabel="Modal"
-          onRequestClose={this.closeModal}
-          className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <button type="button" className="close" onClick={this.closeModal} data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 className="modal-title">{this.props.modalTitle}</h4>
-            </div>
-            <div className="modal-body">
-              {this.props.modalContent}
-            </div>
+        <Modal show={this.props.isOpen} onHide={this.closeModal}>
+
+          <Modal.Header>
+            <Modal.Title >
+              {this.props.modalTitle}
+            </Modal.Title>
+            <button style={buttonStyle} type="button" className="close" onClick={this.closeModal} data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Modal.Header>
+
+          <Modal.Body>
+            {this.props.modalContent}
+          </Modal.Body>
+
+          <Modal.Footer>
             {footer}
-          </div>
+          </Modal.Footer>
+
         </Modal>
-      </div>
     );
   }
 }

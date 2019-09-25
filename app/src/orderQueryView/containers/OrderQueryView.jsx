@@ -37,34 +37,38 @@ class OrderQueryView extends Component {
 
   render() {
     let title = <h2 className="card-pf-title">Query Orders</h2>;
-    let buttonStyle = {marginBottom: '20px', marginRight: '0px'};
+    let buttonStyle = {marginBottom: '20px', marginRight: '0px', marginTop: '15px'};
     let divStyle = {overflow: 'hidden'};
     let resetButton =
-      <button onClick={this.handleReset}
-              className="btn btn-primary m-r-8 pull-right"
-              style={buttonStyle}>
-        Clear Table
-      </button>;
+        <div className="text-center">
+          <button onClick={this.handleReset}
+                  className="btn btn-primary m-r-8 float-right"
+                  style={buttonStyle}>
+            Clear Table
+          </button>
+        </div>;
+
 
     return (
-      <div className="col col-cards-pf container-cards-pf fader">
-        <div className="cards col-xs-10 col-md-8 ">
-          <div className="card-pf card-pf-accented" style={divStyle}>
-            {title}
-            <div className="card-pf-footer">
-              <p> Enter a search query below: </p>
-              <SqlQuery updateQuery = {this.props.updateQuery}
-                        query = {this.props.query}
-                        handlePostQuery = {this.handleSearch}/>
-              <QueryResults table = {this.props.table}/>
+        <div className="col col-cards-pf container-cards-pf fader">
+          <div className="cards col-xs-10 col-md-8 ">
+            <div className="card-pf card-pf-accented" style={divStyle}>
+              {title}
+              <div className="card-pf-footer">
+                <p> Enter a search query below: </p>
+                <SqlQuery updateQuery = {this.props.updateQuery}
+                          query = {this.props.query}
+                          handlePostQuery = {this.handleSearch}/>
+                <QueryResults table = {this.props.table}/>
+              </div>
+              {resetButton}
             </div>
-            {resetButton}
           </div>
         </div>
-      </div>
     )
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     query: state.orderQueryReducer.query,
@@ -84,7 +88,6 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(clearTable())
     },
   }
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderQueryView)

@@ -2,7 +2,7 @@ export function getIcon(messageType) {
   let icon;
   switch(messageType) {
     case "danger":
-      icon = "error-circle-o";
+      icon = "exclamation-triangle";
       break;
     case "success":
       icon = "ok";

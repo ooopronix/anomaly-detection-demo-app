@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 import PropTypes from 'prop-types';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class NavBar extends Component {
     static get propTypes() {
@@ -34,7 +35,9 @@ class NavBar extends Component {
                 </Nav>
                 <Nav pullRight>
                     <Nav.Link href="#" className="cart-link" onSelect={this.props.toggleModal}>
-                        <i className="fa fa-shopping-cart fa" aria-hidden="true"/>{"   "}Cart:
+                        <a className="card-icon" >
+                            <FontAwesomeIcon icon="shopping-cart" />
+                        </a>{"   "}Cart:
                         <span className="cart-nav-count">{cartCount}</span>
                     </Nav.Link>
                 </Nav>

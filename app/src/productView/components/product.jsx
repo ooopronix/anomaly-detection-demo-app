@@ -2,6 +2,7 @@ import React,{ Component } from 'react';
 import PropTypes from 'prop-types';
 import ButtonComponent from '../../modal/components/ButtonModal.jsx';
 import { ROUTES } from '../productConstants'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class Product extends Component {
   static get propTypes() {
@@ -34,24 +35,25 @@ class Product extends Component {
   render() {
     let product = this.props.product;
     let image =  this.imageFormatter(this.props.product.image);
-    let cartButtonContent = <span className="fa fa-shopping-cart fa-lg"
-                                  onClick={this.selectProduct}/>;
+    let cartButtonContent = <span onClick={this.selectProduct}>
+      <FontAwesomeIcon icon="shopping-cart" />
+    </span>;
 
     return (
-      <div className="card-pf-body" style={{height: '261px'}}>
-        <div className="card-pf-top-element aligner">{image}</div>
-        <h2 className="card-pf-title text-center">{product.pname}</h2>
-        <div className="card-pf-items text-center">
-          <div className="card-pf-item">
-            <span className="fa fa-usd"/>
-            <span className="card-pf-item-text">{product.pprice}</span>
+        <div className="card-pf-body" style={{height: '261px'}}>
+          <div className="card-pf-top-element aligner">{image}</div>
+          <h2 className="card-pf-title text-center">{product.pname}</h2>
+          <div className="card-pf-items text-center">
+            <div className="card-pf-item">
+              <span className="fa fa-usd"/>
+              <span className="card-pf-item-text">{product.pprice}</span>
+            </div>
+            <div className="card-pf-item">
+              <ButtonComponent toggleModal={this.props.toggleModal} content={cartButtonContent}/>
+            </div>
           </div>
-          <div className="card-pf-item">
-            <ButtonComponent toggleModal={this.props.toggleModal} content={cartButtonContent}/>
-          </div>
+          <p className="card-pf-info text-center">Category: {product.ptype}</p>
         </div>
-        <p className="card-pf-info text-center">Category: {product.ptype}</p>
-      </div>
     )
   }
 
