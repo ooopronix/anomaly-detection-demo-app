@@ -23,4 +23,4 @@ To run in dev mode:
 
 `cd ..`
 
-`./start.h`
+`./start.sh`
