@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "==1.0.4"
 pymongo = "==3.9.0"
 prometheus_flask_exporter = "==0.10.0"
+gunicorn = "==19.9.0"
 
 [requires]
 python_version = "3.7"
