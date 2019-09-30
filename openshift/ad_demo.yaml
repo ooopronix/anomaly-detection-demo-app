@@ -19,24 +19,52 @@ objects:
     metadata:
       labels:
         app: ${APP_SERVICE_NAME}
+        build: ${APP_SERVICE_NAME}
       name: ${APP_SERVICE_NAME}
-    spec:
-      lookupPolicy:
-        local: true
-      tags:
-        - name: latest
-          from:
-            kind: DockerImage
-            name: quay.io/${QUAY_REPO}/anomaly_detection_poc:latest
-          referencePolicy:
-            type: Local
 
   - apiVersion: v1
-    kind: DeploymentConfig
+    kind: BuildConfig
     metadata:
       labels:
         app: ${APP_SERVICE_NAME}
       name: ${APP_SERVICE_NAME}
+      annotations:
+        template.alpha.openshift.io/wait-for-ready: "true"
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: ${APP_SERVICE_NAME}:latest
+          namespace: "${NAMESPACE}"
+      runPolicy: Serial
+      source:
+        git:
+          ref: "${GIT_REF}"
+          uri: "${GIT_URI}"
+        type: Git
+      strategy:
+        dockerStrategy:
+          noCache: true
+        type: Source
+      triggers:
+        - imageChange: {}
+          type: ImageChange
+        - type: ConfigChange
+        - generic:
+            secret: "${GENERIC_TRIGGER_SECRET}"
+          type: Generic
+        - github:
+            secret: "${GITHUB_TRIGGER_SECRET}"
+          type: GitHub
+
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: ${APP_SERVICE_NAME}
+      labels:
+        app: ${APP_SERVICE_NAME}
+      annotations:
+        template.alpha.openshift.io/wait-for-ready: "true"
     spec:
       replicas: 1
       selector:
@@ -51,7 +79,8 @@ objects:
         spec:
           containers:
             - name: ${APP_SERVICE_NAME}
-              image: quay.io/hukhan/anomaly_detection_poc:latest
+              image: >-
+                docker-registry.default.svc:5000/${NAMESPACE}/${APP_SERVICE_NAME}:latest
               imagePullPolicy: Always
               env:
                 - name: ES_HOST_URL
@@ -59,6 +88,17 @@ objects:
               ports:
                 - containerPort: 8088
                   protocol: TCP
+      test: false
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${APP_SERVICE_NAME}
+            from:
+              kind: ImageStreamTag
+              name: ${APP_SERVICE_NAME}:latest
+              namespace: "${NAMESPACE}"
+          type: ImageChange
 
   - apiVersion: v1
     kind: Service
@@ -104,3 +144,26 @@ parameters:
     displayName: Host URL for elasticsearch
     value: http://$(LAD_ELASTICSEARCH_SERVICE_SERVICE_HOST):$(LAD_ELASTICSEARCH_SERVICE_SERVICE_PORT)
     required: false
+  - name: NAMESPACE
+    displayName: Namespace of the project
+    required: true
+  - name: GIT_URI
+    displayName: Git URI
+    description: Git source URI for superset
+    value: https://github.com/HumairAK/anomaly-detection-demo-app
+    required: true
+  - name: GIT_REF
+    displayName: Git Ref
+    description: Git branch/tag reference
+    value: local_build_strategy
+    required: true
+  - name: GITHUB_TRIGGER_SECRET
+    displayName: Github Trigger Secret
+    description: Github Trigger Secret
+    from: "[a-zA-Z0-9]{8}"
+    generate: "expression"
+  - name: GENERIC_TRIGGER_SECRET
+    displayName: Generic Trigger Secret
+    description: Generic Trigger Secret
+    from: "[a-zA-Z0-9]{8}"
+    generate: "expression"
