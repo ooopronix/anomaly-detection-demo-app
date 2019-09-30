@@ -59,9 +59,11 @@ objects:
   - apiVersion: v1
     kind: DeploymentConfig
     metadata:
+      name: ${APP_SERVICE_NAME}
       labels:
         app: ${APP_SERVICE_NAME}
-      name: ${APP_SERVICE_NAME}
+      annotations:
+        template.alpha.openshift.io/wait-for-ready: "true"
     spec:
       replicas: 1
       selector:
@@ -85,6 +87,17 @@ objects:
               ports:
                 - containerPort: 8088
                   protocol: TCP
+      test: false
+      triggers:
+        - imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${APP_SERVICE_NAME}
+            from:
+              kind: ImageStreamTag
+              name: ${APP_SERVICE_NAME}:latest
+              namespace: "${NAMESPACE}"
+          type: ImageChange
 
   - apiVersion: v1
     kind: Service
@@ -140,7 +153,7 @@ parameters:
   - name: GIT_REF
     displayName: Git Ref
     description: Git branch/tag reference
-    value: master
+    value: local_build_strategy
     required: true
   - name: GITHUB_TRIGGER_SECRET
     displayName: Github Trigger Secret
