@@ -34,7 +34,7 @@ class ElasticsearchLogHandler(logging.Handler):
             + "/"
             + str(self.es_log_type)
         )
-        data = {"message": log_entry}
+        data = {"message": log_entry, "@timestamp": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")}
         content = requests.post(
             url, data=json.dumps(data), headers={"Content-Type": "application/json"}
         ).content
