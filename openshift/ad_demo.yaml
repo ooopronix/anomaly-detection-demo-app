@@ -35,7 +35,6 @@ objects:
         to:
           kind: ImageStreamTag
           name: ${APP_SERVICE_NAME}:latest
-          namespace: "${NAMESPACE}"
       runPolicy: Serial
       source:
         git:
@@ -144,9 +143,6 @@ parameters:
     displayName: Host URL for elasticsearch
     value: http://$(LAD_ELASTICSEARCH_SERVICE_SERVICE_HOST):$(LAD_ELASTICSEARCH_SERVICE_SERVICE_PORT)
     required: false
-  - name: NAMESPACE
-    displayName: Namespace of the project
-    required: true
   - name: GIT_URI
     displayName: Git URI
     description: Git source URI for superset
