@@ -35,7 +35,6 @@ objects:
         to:
           kind: ImageStreamTag
           name: ${APP_SERVICE_NAME}:latest
-          namespace: "${NAMESPACE}"
       runPolicy: Serial
       source:
         git:
@@ -79,8 +78,7 @@ objects:
         spec:
           containers:
             - name: ${APP_SERVICE_NAME}
-              image: >-
-                docker-registry.default.svc:5000/${NAMESPACE}/${APP_SERVICE_NAME}:latest
+              image: ${APP_SERVICE_NAME}/${APP_SERVICE_NAME}:latest
               imagePullPolicy: Always
               env:
                 - name: ES_HOST_URL
@@ -97,7 +95,6 @@ objects:
             from:
               kind: ImageStreamTag
               name: ${APP_SERVICE_NAME}:latest
-              namespace: "${NAMESPACE}"
           type: ImageChange
 
   - apiVersion: v1
@@ -144,9 +141,6 @@ parameters:
     displayName: Host URL for elasticsearch
     value: http://$(LAD_ELASTICSEARCH_SERVICE_SERVICE_HOST):$(LAD_ELASTICSEARCH_SERVICE_SERVICE_PORT)
     required: false
-  - name: NAMESPACE
-    displayName: Namespace of the project
-    required: true
   - name: GIT_URI
     displayName: Git URI
     description: Git source URI for superset
