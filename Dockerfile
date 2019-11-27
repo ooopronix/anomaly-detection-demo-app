@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/python-36
+FROM centos/python-36-centos7
 
 # Demo App version
 ARG AD_DEMO_REPO_OWNER=HumairAK
