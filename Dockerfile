@@ -1,4 +1,4 @@
-FROM centos/python-36-centos7
+FROM fedora:latest
 
 # Demo App version
 ARG AD_DEMO_REPO_OWNER=HumairAK
@@ -25,7 +25,7 @@ USER 0
 RUN mkdir ${AD_DEMO_HOME} && \
     chgrp -R 0 ${AD_DEMO_HOME} && chmod -R g=u ${AD_DEMO_HOME} && \
     yum update -y && \
-    yum install npm -y
+    yum install npm git which -y
 
 WORKDIR $AD_DEMO_HOME
 
@@ -44,4 +44,3 @@ WORKDIR $AD_DEMO_NAME
 ## Deploy application
 EXPOSE 8088
 CMD ["gunicorn", "app:create_app()"]
-
