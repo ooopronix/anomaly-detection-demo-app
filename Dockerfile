@@ -24,8 +24,8 @@ USER 0
 
 RUN mkdir ${AD_DEMO_HOME} && \
     chgrp -R 0 ${AD_DEMO_HOME} && chmod -R g=u ${AD_DEMO_HOME} && \
-    dnf update -y && \
-    dnf install npm -y
+    yum update -y && \
+    yum install npm -y
 
 WORKDIR $AD_DEMO_HOME
 
